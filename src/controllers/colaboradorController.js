@@ -39,3 +39,20 @@ export const updateColaborador = async (req, res) => {
         return res.status(400).json({ message: 'Error al actualizar el colaborador' })
     }
 }
+
+export const deleteColaborador = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const colaborador = await Colaborador.findByPk(id);
+
+        if (!colaborador) {
+            return res.status(404).json({ message: 'Colaborador no encontrado' });
+        }
+
+        await colaborador.destroy();
+        
+        return res.status(200).json({ message: 'Colaborador eliminado exitosamente' });
+    } catch (error) {
+        return res.status(500).json({ message: 'Error al eliminar el colaborador' });
+    }
+}
