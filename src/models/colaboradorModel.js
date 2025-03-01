@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
+import { sequelize } from '../config/db.js';
 
-export const Colaborador = (sequelize) => {
-    return sequelize.define(
+export const Colaborador = sequelize.define(
     'Colaborador',
     {
         idColaborador: {
@@ -13,10 +13,6 @@ export const Colaborador = (sequelize) => {
         nombre: {
             type: DataTypes.STRING(45),
             allowNull: false,
-            validate: {
-                notEmpty: { msg: 'El nombre no puede estar vacio'},
-                len: [2, 45]
-            }
         },
         apellido: {
             type: DataTypes.STRING(45),
@@ -46,5 +42,5 @@ export const Colaborador = (sequelize) => {
     {
         tableName: 'colaboradores',
         timestamps: false
-    }); 
-}
+    }
+); 

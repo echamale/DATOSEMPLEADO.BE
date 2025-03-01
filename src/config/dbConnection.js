@@ -1,11 +1,13 @@
 import { sequelize } from './db.js';
-import { Colaborador } from '../colaborador/colaboradorModel.js';
+import { models } from '../models/models.js';
 
 export const dbConnection = async () => {
     try {
         await sequelize.authenticate();
         console.log('Conectado a la base de datos')
-        const ColaboradorModel = Colaborador(sequelize);
+        Object.values(models).forEach((model) => {
+            new model(sequelize);
+        });
         await sequelize.sync({force: false});
         console.log("sincronizacion correcta")
 
