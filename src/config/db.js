@@ -9,16 +9,10 @@ export const sequelize = new Sequelize(
     process.env.DB_PASSWORD,
     {
         host: process.env.DB_HOST,
-        dialect: 'mysql'
-    }
-);
+        dialect: 'mysql',
+        define: {
+            freezeTableName: true
+        }
+    },
 
-export const dbConnection = async () => {
-    try {
-        await sequelize.authenticate();
-        console.log('Conectado a la base de datos')
-    } catch (error) {
-        console.error('Error al conectarse a la base de datos.', error)
-        process.exit(1)
-    }
-};
+);

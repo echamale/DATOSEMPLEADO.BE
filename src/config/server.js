@@ -2,7 +2,7 @@
 
 import express from 'express';
 import cors from 'cors';
-import { dbConnection } from '../config/db.js'
+import { dbConnection } from '../config/dbConnection.js'
 
 class Server {
     constructor() {
@@ -15,7 +15,7 @@ class Server {
     }
 
     async connectDB() {
-        this.db = await dbConnection();
+        await dbConnection();
     }
 
     middlewares() {
