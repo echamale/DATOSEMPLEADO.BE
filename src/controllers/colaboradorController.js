@@ -8,8 +8,13 @@ export const createColaborador = async (req, res) => {
 
         return res.status(201).json({ message: 'Colaborador creado', colaborador});
     } catch (error) {
-        console.log("error", error)
-        return res.status(400).json({ message: 'Error al crear colaborador', error});
+        if (error.name === "SequelizeValidationError") {
+            const errorMessages = error.errors.map(err => err.message);
+            return res.status(400).json({
+                message: "Error al crear colaborador",
+                errors: errorMessages
+            });
+        }
     }
 }
 
@@ -36,7 +41,13 @@ export const updateColaborador = async (req, res) => {
         await colaborador.update({ nombre, apellido, direccion, edad, profesion, estadoCivil });
         return res.status(200).json({ message: 'Colaborador actualizado', colaborador});
     } catch (error) {
-        return res.status(400).json({ message: 'Error al actualizar el colaborador' })
+        if (error.name === "SequelizeValidationError") {
+            const errorMessages = error.errors.map(err => err.message);
+            return res.status(400).json({
+                message: "Error al actualizar colaborador",
+                errors: errorMessages
+            });
+        }
     }
 }
 
